@@ -3,7 +3,7 @@
 #include <PxPhysicsAPI.h>
 
 #include <vector>
-
+#include "Vector3D.h"
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
@@ -30,7 +30,8 @@ PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
 ContactReportCallback gContactReportCallback;
 
-
+RenderItem* sphereItem = nullptr;
+PxTransform* spheretransform = nullptr;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -47,6 +48,14 @@ void initPhysics(bool interactive)
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
+	Vector3D spher = Vector3D(1.0, 5.0, 6.0);
+	Vector3D* sphere = new Vector3D(1.0, 5.0, 6.0);
+	Vector3D a = spher*2.0f;
+	std::cout << a.getX();
+
+	spheretransform = new PxTransform(Vector3(0, 0, 0));
+	sphereItem = new RenderItem(CreateShape(PxSphereGeometry(10)), spheretransform ,{1.0, 0.0, 0.0, 1.0});
+	
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
 	gDispatcher = PxDefaultCpuDispatcherCreate(2);
@@ -54,6 +63,8 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
+	
+
 	}
 
 
@@ -75,6 +86,7 @@ void cleanupPhysics(bool interactive)
 	PX_UNUSED(interactive);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
+	DeregisterRenderItem(sphereItem);
 	gScene->release();
 	gDispatcher->release();
 	// -----------------------------------------------------
