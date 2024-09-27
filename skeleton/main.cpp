@@ -7,7 +7,7 @@
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
-
+#include "Particula.h"
 #include <iostream>
 
 std::string display_text = "This is a test";
@@ -32,6 +32,7 @@ ContactReportCallback gContactReportCallback;
 
 RenderItem* sphereItem = nullptr;
 PxTransform* spheretransform = nullptr;
+Particula* particle = nullptr;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -53,8 +54,10 @@ void initPhysics(bool interactive)
 	Vector3D a = spher*2.0f;
 	std::cout << a.getX();
 
-	spheretransform = new PxTransform(Vector3(0, 0, 0));
-	sphereItem = new RenderItem(CreateShape(PxSphereGeometry(10)), spheretransform ,{1.0, 0.0, 0.0, 1.0});
+	//spheretransform = new PxTransform(Vector3(0, 0, 0));
+	//sphereItem = new RenderItem(CreateShape(PxSphereGeometry(10)), spheretransform ,{1.0, 0.0, 0.0, 1.0});
+	
+	particle = new Particula(Vector3(0, 0, 0), Vector3(10.0, 0.0, 0.0));
 	
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
@@ -77,6 +80,7 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
+	particle->integrate(t,false);
 }
 
 // Function to clean data
@@ -86,7 +90,7 @@ void cleanupPhysics(bool interactive)
 	PX_UNUSED(interactive);
 
 	// Rigid Body ++++++++++++++++++++++++++++++++++++++++++
-	DeregisterRenderItem(sphereItem);
+	//DeregisterRenderItem(sphereItem);
 	gScene->release();
 	gDispatcher->release();
 	// -----------------------------------------------------
