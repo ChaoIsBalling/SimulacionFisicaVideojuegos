@@ -7,7 +7,7 @@
 #include "core.hpp"
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
-#include "Particula.h"
+#include"Projectile.h"
 #include <iostream>
 
 std::string display_text = "This is a test";
@@ -32,7 +32,7 @@ ContactReportCallback gContactReportCallback;
 
 RenderItem* sphereItem = nullptr;
 PxTransform* spheretransform = nullptr;
-Particula* particle = nullptr;
+vector <Projectile*> list;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -49,15 +49,13 @@ void initPhysics(bool interactive)
 	gMaterial = gPhysics->createMaterial(0.5f, 0.5f, 0.6f);
 
 	// For Solid Rigids +++++++++++++++++++++++++++++++++++++
-	Vector3D spher = Vector3D(1.0, 5.0, 6.0);
-	Vector3D* sphere = new Vector3D(1.0, 5.0, 6.0);
-	Vector3D a = spher*2.0f;
-	std::cout << a.getX();
+	//Vector3D spher = Vector3D(1.0, 5.0, 6.0);
+	//Vector3D* sphere = new Vector3D(1.0, 5.0, 6.0);
+	//Vector3D a = spher*2.0f;
+	//std::cout << a.getX();
 
 	//spheretransform = new PxTransform(Vector3(0, 0, 0));
 	//sphereItem = new RenderItem(CreateShape(PxSphereGeometry(10)), spheretransform ,{1.0, 0.0, 0.0, 1.0});
-	
-	particle = new Particula(Vector3(0, 0, 0), Vector3(10.0, 0.0, 0.0));
 	
 	PxSceneDesc sceneDesc(gPhysics->getTolerancesScale());
 	sceneDesc.gravity = PxVec3(0.0f, -9.8f, 0.0f);
@@ -80,7 +78,14 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	particle->integrate(t,false);
+	for (int i = 0; i < list.size(); i++)
+	{
+		list[i]->integrate(t, false);
+		if (!list[i]->Alive())
+		{
+			list.erase(list.begin() + i);
+		}
+	}
 }
 
 // Function to clean data
@@ -109,6 +114,10 @@ void keyPress(unsigned char key, const PxTransform& camera)
 
 	switch(toupper(key))
 	{
+	case 'Z':
+		std::cout << "s";
+		list.push_back(new Projectile(Vector3(30, 35, 40), Vector3(0.0, 20.0, -5.0), Vector3(0, -9.8, 0)));
+		break;
 	//case 'B': break;
 	//case ' ':	break;
 	case ' ':
