@@ -11,6 +11,8 @@ void ParticleSystem::kill()
 
 void ParticleSystem::generate()
 {
+	Vector3 newPos = pos;
+	//newPos+=u(_mt)*
 	lista.push_back(new Particula(pos, speed, accel,10,100));
 }
 

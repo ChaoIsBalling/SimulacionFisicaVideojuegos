@@ -1,11 +1,13 @@
 #pragma once
 #include<list>
 #include "Particula.h"
+#include <random>
 class ParticleSystem
 { private:
 	list<Particula*> lista;
-	
 	int maxParticula;
+	std::mt19937 _mt;
+	std::uniform_real_distribution<double> u{ 0,1 };
 	Vector3 pos;
 	Vector3 accel;
 	Vector3 speed;
