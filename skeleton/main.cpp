@@ -8,6 +8,7 @@
 #include "RenderUtils.hpp"
 #include "callbacks.hpp"
 #include"Projectile.h"
+#include "ParticleSystem.h"
 #include <iostream>
 
 std::string display_text = "This is a test";
@@ -32,7 +33,8 @@ ContactReportCallback gContactReportCallback;
 
 RenderItem* sphereItem = nullptr;
 PxTransform* spheretransform = nullptr;
-vector <Projectile*> list;
+ParticleSystem* sistema = nullptr;
+vector <Projectile*> lista;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -65,7 +67,7 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 	
-
+	sistema = new ParticleSystem(Vector3(0,50,0),Vector3(0,-9.8,0),Vector3(0,10,0),1000);
 	}
 
 
@@ -78,14 +80,15 @@ void stepPhysics(bool interactive, double t)
 
 	gScene->simulate(t);
 	gScene->fetchResults(true);
-	for (int i = 0; i < list.size(); i++)
+	for (int i = 0; i < lista.size(); i++)
 	{
-		list[i]->integrate(t, false);
-		if (!list[i]->Alive())
+		lista[i]->integrate(t, false);
+		if (!lista[i]->Alive())
 		{
-			list.erase(list.begin() + i);
+			lista.erase(lista.begin() + i);
 		}
 	}
+	sistema->update(t);
 }
 
 // Function to clean data
@@ -116,7 +119,7 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	{
 	case 'Z':
 		std::cout << "s";
-		list.push_back(new Projectile(Vector3(30, 35, 40), Vector3(0.0, 20.0, -5.0), Vector3(0, -9.8, 0)));
+		lista.push_back(new Projectile(Vector3(30, 35, 40), Vector3(0.0, 20.0, -5.0), Vector3(0, -9.8, 0)));
 		break;
 	//case 'B': break;
 	//case ' ':	break;
