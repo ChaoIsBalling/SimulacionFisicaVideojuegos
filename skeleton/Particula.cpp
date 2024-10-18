@@ -1,7 +1,7 @@
 #include "Particula.h"
 void Particula::integrate(double t, bool semi)
 {
-	if (!semi)
+	if (semi)
 	{
 		pose.p += vel * t;
 		vel += accel * t;

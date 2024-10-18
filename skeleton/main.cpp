@@ -35,6 +35,7 @@ RenderItem* sphereItem = nullptr;
 PxTransform* spheretransform = nullptr;
 ParticleSystem* sistema = nullptr;
 vector <Projectile*> lista;
+Particula* p = nullptr;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -66,8 +67,8 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
-	
-	sistema = new ParticleSystem(Vector3(0,50,0),Vector3(0,-9.8,0),Vector3(0,10,0),1000);
+	p = new Particula(Vector3(0,0,0),Vector3(2,0,0),Vector3(0,0,0),100,100);
+	sistema = new ParticleSystem(Vector3(0,100,0),Vector3(0,-9.8,0),Vector3(0,10,0));
 	}
 
 
@@ -88,6 +89,7 @@ void stepPhysics(bool interactive, double t)
 			lista.erase(lista.begin() + i);
 		}
 	}
+	p->integrate(t, true);
 	sistema->update(t);
 }
 
@@ -123,10 +125,28 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	//case 'B': break;
 	//case ' ':	break;
-	case ' ':
+	case '0':
 	{
+		sistema->changeModes(0);
+		sistema->clear();
 		break;
 	}
+	case'1':
+	{
+		sistema->changeModes(1);
+		sistema->clear();
+		break;
+	}
+	case'2':
+	{
+		sistema->changeModes(2);
+		sistema->clear();
+		break;
+	}
+	case '3':
+		sistema->clear();
+		
+		break;
 	default:
 		break;
 	}
