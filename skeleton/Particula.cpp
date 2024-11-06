@@ -1,6 +1,7 @@
 #include "Particula.h"
 void Particula::integrate(double t, bool semi)
 {
+	accel = accForce / mass;
 	if (semi)
 	{
 		pose.p += vel * t;
@@ -13,6 +14,7 @@ void Particula::integrate(double t, bool semi)
 		vel = vel * pow(damping, t);
 		pose.p += vel * t;
 	}
+	clearForce();
 	lifeTime -= t;
 	if (lifeTime<0||pose.p.x > posIni.x + maxBound || 
 		pose.p.x < posIni.x - maxBound || 
@@ -23,4 +25,14 @@ void Particula::integrate(double t, bool semi)
 	{
 		alive = false;
 	}
+}
+
+void Particula::addForce(Vector3 f)
+{
+	accForce += f;
+}
+
+void Particula::clearForce()
+{
+	accForce *= 0;
 }

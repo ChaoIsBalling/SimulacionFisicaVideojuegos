@@ -14,6 +14,7 @@ void ParticleSystem::clear()
 {
 	while (!lista.empty())
 	{
+		reg.freeParticle(lista.front());
 		delete lista.front();
 		lista.pop_front();
 	}
@@ -23,6 +24,7 @@ void ParticleSystem::kill()
 {
 	if (lista.size() > MAXPARTICULAS)
 	{
+		reg.freeParticle(lista.front());
 		delete lista.front();
 		lista.pop_front();
 }
@@ -45,7 +47,9 @@ void ParticleSystem::generate()
 		newSpeed.z += uniform_real_distribution<float>(0, 1)(_mt);
 		float f = uniform_real_distribution<float>(0, 1)(_mt);
 		Vector4 color = { 0,0,1,1 };
-		lista.push_back(new Particula(newPos, newSpeed, accel, 10, 1000,f,color));
+		Particula* aux = new Particula(newPos, newSpeed, {0,0,0}, 10, 1000, f, color);
+		reg.RegisterParticle(aux, g);
+		lista.push_back(aux);
 	}
 	else if (modo == MIST)
 	{
@@ -79,11 +83,13 @@ void ParticleSystem::generate()
 void ParticleSystem::update(double t)
 {
 	generate();
+	reg.update();
 	for (auto it =lista.begin(); it!=lista.end();)
 	{
 		(*it)->integrate(t, true);
 		if (!(*it)->Alive())
 		{
+			reg.freeParticle(*it);
 			delete (*it);
 			it= lista.erase(it);
 		}
