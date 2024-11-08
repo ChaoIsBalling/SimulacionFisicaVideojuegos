@@ -123,6 +123,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		std::cout << "s";
 		lista.push_back(new Projectile(Vector3(30, 35, 40), Vector3(0.0, 20.0, -5.0), Vector3(0, -9.8, 0)));
 		break;
+	case'E':
+		sistema->setBlast();
+		break;
 	//case 'B': break;
 	//case ' ':	break;
 	case '0':

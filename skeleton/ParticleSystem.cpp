@@ -63,7 +63,8 @@ void ParticleSystem::generate()
 		newSpeed.z += uniform_real_distribution<float>(0, 1)(_mt);
 		float f = uniform_real_distribution<float>(0, 1)(_mt);
 		Vector4 color = { 1,1,1,0.7 };
-		lista.push_back(new Particula(newPos, newSpeed, Vector3(0,0,0), 10, 1000,f,color));
+		Particula* aux = new Particula(newPos, newSpeed, Vector3(0, 0, 0), 10, 1000, f, color);
+		lista.push_back(aux);
 	}
 	else if (modo == WATERFALL)
 	{
@@ -76,7 +77,27 @@ void ParticleSystem::generate()
 		newSpeed.z += normal_distribution<float>(0, 1)(_mt);
 		float f = uniform_real_distribution<float>(1, 2)(_mt);
 		Vector4 color = { 0,0,1,1 };
-		lista.push_back(new Particula(newPos, newSpeed, accel, 10, 100, f, color));
+		Particula* aux = new Particula(newPos, newSpeed, accel, 10, 100, f, color);
+		reg.RegisterParticle(aux, t);
+		lista.push_back(aux);
+	}
+	else {
+		newPos = Vector3(0, 0, 0);
+		newPos.x += normal_distribution<float>(0, 2)(_mt);
+		newPos.y += normal_distribution<float>(0, 2)(_mt);
+		newPos.z += normal_distribution<float>(0, 2)(_mt);
+		float f = uniform_real_distribution<float>(1, 2)(_mt);
+		Vector4 color = { 0,0,1,1 };
+		Particula* aux = new Particula(newPos, Vector3(0, 0, 0), Vector3(0, 0, 0), 10, 100, f, color);
+		lista.push_back(aux);
+	}
+}
+
+void ParticleSystem::setBlast()
+{
+	for (auto a:lista)
+	{
+		reg.RegisterParticle(a, e);
 	}
 }
 
