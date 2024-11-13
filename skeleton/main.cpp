@@ -69,6 +69,7 @@ void initPhysics(bool interactive)
 	gScene = gPhysics->createScene(sceneDesc);
 	p = new Particula(Vector3(0,0,0),Vector3(2,0,0),Vector3(0,0,0),100,100);
 	sistema = new ParticleSystem(Vector3(0,100,0),Vector3(0,-9.8,0),Vector3(0,10,0));
+//	sistema->generateSpringDemo();
 	}
 
 

@@ -1,5 +1,18 @@
 #include "ParticleSystem.h"
 
+void ParticleSystem::generateSpringDemo()
+{
+	Particula* p1 = new Particula({-10.0,10.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0},100,100,2);
+	Particula* p2= new Particula({10.0,10.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0},100,100,2);
+	p2->setMass(2.0);
+	SpringForceGenerator* f1 = new SpringForceGenerator(1, 10, p2);
+	reg.RegisterParticle(p1, f1);
+	SpringForceGenerator* f2 = new SpringForceGenerator(1, 10, p1);
+	reg.RegisterParticle(p2, f2);
+	lista.push_back(p1);
+	lista.push_back(p2);
+}
+
 void ParticleSystem::changeModes(int i)
 {
 	if (i == 0)

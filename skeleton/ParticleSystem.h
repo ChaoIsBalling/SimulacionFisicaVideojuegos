@@ -7,6 +7,7 @@
 #include"WindForceGenerator.h"
 #include "TornadoForceGenerator.h"
 #include "ExplosionForceGenerator.h"
+#include "SpringForceGenerator.h"
 enum Mode{RAIN,MIST,WATERFALL,STATIC};
 
 const int MAXPARTICULAS = 100000;
@@ -14,6 +15,7 @@ const int MAXPARTICULAS = 100000;
 class ParticleSystem
 { private:
 	list<Particula*> lista;
+	list<ForceGenerator*>forceList;
 	std::mt19937 _mt;
 	Mode modo;
 	Vector3 pos;
@@ -32,6 +34,8 @@ public:
 		e = new ExplosionForceGenerator(1000, Vector3(0,0,0),100000,10000);
 	};
 	ParticleForceRegistry reg = ParticleForceRegistry();
+
+	void generateSpringDemo();
 	void changeModes(int i);
 	void clear();
 	void kill();
