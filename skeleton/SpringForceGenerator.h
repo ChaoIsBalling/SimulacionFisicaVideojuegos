@@ -5,6 +5,7 @@ class SpringForceGenerator:public ForceGenerator
 private:
 	double k;
 	double restingLength;
+protected:
 	Particula* other;
 public:
 	SpringForceGenerator(double K, double r, Particula* p) :k(K),restingLength(r),other(p) {};
