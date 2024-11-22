@@ -9,6 +9,7 @@
 #include "callbacks.hpp"
 #include"Projectile.h"
 #include "ParticleSystem.h"
+#include "RigidSolid.h"
 #include <iostream>
 
 std::string display_text = "This is a test";
@@ -26,6 +27,7 @@ PxPhysics*				gPhysics	= NULL;
 PxMaterial*				gMaterial	= NULL;
 
 PxPvd*                  gPvd        = NULL;
+
 
 PxDefaultCpuDispatcher*	gDispatcher = NULL;
 PxScene*				gScene      = NULL;
@@ -67,9 +69,20 @@ void initPhysics(bool interactive)
 	sceneDesc.filterShader = contactReportFilterShader;
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
+	PxRigidStatic* Suelo = gPhysics->createRigidStatic(PxTransform({ 0,0,0 }));
+	PxShape* shape = CreateShape(PxBoxGeometry(100, 0.1, 100));
+	Suelo->attachShape(*shape);
+	gScene->addActor(*Suelo);
+
+	PxRigidDynamic* aux;
+	
+
+	//RenderItem* item;
+	//item = new RenderItem(shape, Suelo, { 0.8,0.8,0.8,1 });
+
 	p = new Particula(Vector3(0,0,0),Vector3(2,0,0),Vector3(0,0,0),100,100);
 	sistema = new ParticleSystem(Vector3(0,100,0),Vector3(0,-9.8,0),Vector3(0,10,0));
-//	sistema->generateSpringDemo();
+   sistema->generateSpringDemo();
 	}
 
 

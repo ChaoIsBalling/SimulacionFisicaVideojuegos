@@ -13,7 +13,9 @@ void ParticleSystem::generateSpringDemo()
 	lista.push_back(p2);
 	forceList.push_back(f1);
 	forceList.push_back(f2);
-	Particula* p3 = new Particula({ -10.0,20.0,0.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 100, 100, 2);
+	Particula* p3 = new Particula({ -10.0,20.0,0.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 100, 100, 2);	
+	GravityForceGenerator* g = new GravityForceGenerator();
+	reg.RegisterParticle(p3, g);
 	AnchoredSpringFG* f3 = new AnchoredSpringFG(1, 10, { 10.0,20.0,0.0 });
 	reg.RegisterParticle(p3,f3);
 	lista.push_back(p3);
@@ -119,14 +121,14 @@ void ParticleSystem::generate()
 		lista.push_back(aux);
 	}
 	else {
-		newPos = Vector3(0, 0, 0);
+		/*newPos = Vector3(0, 0, 0);
 		newPos.x += normal_distribution<float>(0, 2)(_mt);
 		newPos.y += normal_distribution<float>(0, 2)(_mt);
 		newPos.z += normal_distribution<float>(0, 2)(_mt);
 		float f = uniform_real_distribution<float>(1, 2)(_mt);
 		Vector4 color = { 0,0,1,1 };
 		Particula* aux = new Particula(newPos, Vector3(0, 0, 0), Vector3(0, 0, 0), 10, 100, f, color);
-		lista.push_back(aux);
+		lista.push_back(aux);*/
 	}
 }
 
