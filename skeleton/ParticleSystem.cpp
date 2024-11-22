@@ -13,6 +13,8 @@ void ParticleSystem::generateSpringDemo()
 	lista.push_back(p2);
 	forceList.push_back(f1);
 	forceList.push_back(f2);
+	springList.push_back(f1);
+	springList.push_back(f2);
 	Particula* p3 = new Particula({ -10.0,20.0,0.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 100, 100, 2);	
 	GravityForceGenerator* g = new GravityForceGenerator();
 	reg.RegisterParticle(p3, g);
@@ -20,6 +22,7 @@ void ParticleSystem::generateSpringDemo()
 	reg.RegisterParticle(p3,f3);
 	lista.push_back(p3);
 	forceList.push_back(f3);
+	springList.push_back(f3);
 
 }
 
@@ -139,6 +142,14 @@ void ParticleSystem::setBlast()
 		ExplosionForceGenerator* e = new ExplosionForceGenerator(1000, Vector3(0, 0, 0), 100000, 10000);
 		reg.RegisterParticle(a, e);
 		forceList.push_back(e);
+	}
+}
+
+void ParticleSystem::AddK()
+{
+	for (auto a : springList)
+	{
+		a->setK(a->getK() + 1);
 	}
 }
 

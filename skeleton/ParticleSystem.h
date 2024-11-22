@@ -17,6 +17,7 @@ class ParticleSystem
 { private:
 	list<Particula*> lista;
 	list<ForceGenerator*>forceList;
+	list<SpringForceGenerator*> springList;
 	std::mt19937 _mt;
 	Mode modo;
 	Vector3 pos;
@@ -34,6 +35,7 @@ public:
 	void kill();
 	void generate();
 	void setBlast();
+	void AddK();
 	void update(double t);
 };
 

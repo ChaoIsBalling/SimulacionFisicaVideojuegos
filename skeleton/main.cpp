@@ -140,6 +140,9 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case'E':
 		sistema->setBlast();
 		break;
+	case'K':
+		sistema->AddK();
+			break;
 	//case 'B': break;
 	//case ' ':	break;
 	case '0':
