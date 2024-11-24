@@ -268,8 +268,12 @@
     <ClCompile Include="Render\Camera.cpp" />
     <ClCompile Include="Render\Render.cpp" />
     <ClCompile Include="RigidSolid.cpp" />
+    <ClCompile Include="RubberBandForceGenerator.cpp" />
     <ClCompile Include="Scene.cpp" />
+    <ClCompile Include="SolidForceRegistry.cpp" />
+    <ClCompile Include="SolidSystem.cpp" />
     <ClCompile Include="SpringForceGenerator.cpp" />
+    <ClCompile Include="System.cpp" />
     <ClCompile Include="TornadoForceGenerator.cpp" />
     <ClCompile Include="Vector3D.cpp" />
     <ClCompile Include="WindForceGenerator.cpp" />
@@ -290,8 +294,12 @@
     <ClInclude Include="Render\Camera.h" />
     <ClInclude Include="Render\Render.h" />
     <ClInclude Include="RigidSolid.h" />
+    <ClInclude Include="RubberBandForceGenerator.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="SolidForceRegistry.h" />
+    <ClInclude Include="SolidSystem.h" />
     <ClInclude Include="SpringForceGenerator.h" />
+    <ClInclude Include="System.h" />
     <ClInclude Include="TornadoForceGenerator.h" />
     <ClInclude Include="Vector3D.h" />
     <ClInclude Include="WindForceGenerator.h" />

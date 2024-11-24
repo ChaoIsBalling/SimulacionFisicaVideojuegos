@@ -1,47 +1,10 @@
-#include "ParticleSystem.h"
+#include "SolidSystem.h"
 
-void ParticleSystem::generateSpringDemo()
-{GravityForceGenerator* g = new GravityForceGenerator();
-	//Particula* p1 = new Particula({-10.0,10.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0},100,100,false);
-	//Particula* p2= new Particula({10.0,10.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0},100,100,false);
-	//p2->setMass(2.0);
-	//RubberBandForceGenerator* f1 = new RubberBandForceGenerator(1, 5, p2);
-	//reg.RegisterParticle(p1, f1);
-	//reg.RegisterParticle(p1, g);
-	//RubberBandForceGenerator* f2 = new RubberBandForceGenerator(1, 5, p1);
-	//reg.RegisterParticle(p2, f2);
-	////reg.RegisterParticle(p2, g);
-	//lista.push_back(p1);
-	//lista.push_back(p2);
-	//forceList.push_back(f1);
-	//forceList.push_back(f2);
-	//forceList.push_back(g);
-	//springList.push_back(f1);
-	//springList.push_back(f2);
-
-	//ANCHORED
-
-	/*Particula* p3 = new Particula({ -10.0,20.0,0.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 100, 100, 2);	
-	GravityForceGenerator* g = new GravityForceGenerator();
-	reg.RegisterParticle(p3, g);
-	AnchoredSpringFG* f3 = new AnchoredSpringFG(1, 10, { 10.0,20.0,0.0 });
-	reg.RegisterParticle(p3,f3);
-	lista.push_back(p3);
-	forceList.push_back(f3);
-	springList.push_back(f3);*/
-
- //BUOYANCY
-
-	Particula* p4 = new Particula({ 20.0,20.0,0.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 100, 100, true);
-	BuoyancyForceGenerator* f4= new BuoyancyForceGenerator(10,10 ,1000);
-	forceList.push_back(f4);
-	forceList.push_back(g);
-	lista.push_back(p4);
-	reg.RegisterParticle(p4, f4);
-	reg.RegisterParticle(p4, g);
+void SolidSystem::generateSpringDemo()
+{
 }
 
-void ParticleSystem::changeModes(int i)
+void SolidSystem::changeModes(int i)
 {
 	if (i == 0)
 		modo = RAIN;
@@ -51,11 +14,11 @@ void ParticleSystem::changeModes(int i)
 		modo = WATERFALL;
 }
 
-void ParticleSystem::clear()
+void SolidSystem::clear()
 {
 	while (!lista.empty())
 	{
-		reg.freeParticle(lista.front());
+		reg.freeSolid(lista.front());
 		delete lista.front();
 		lista.pop_front();
 	}
@@ -67,17 +30,17 @@ void ParticleSystem::clear()
 	}
 }
 
-void ParticleSystem::kill()
+void SolidSystem::kill()
 {
-	if (lista.size() > MAXPARTICULAS)
+	if (lista.size() > MAXSOLID)
 	{
-		reg.freeParticle(lista.front());
+		reg.freeSolid(lista.front());
 		delete lista.front();
 		lista.pop_front();
-    }
+	}
 }
 
-void ParticleSystem::generate()
+void SolidSystem::generate()
 {
 	Vector3 newPos;
 	newPos = pos;
@@ -94,12 +57,9 @@ void ParticleSystem::generate()
 		newSpeed.z += uniform_real_distribution<float>(0, 1)(_mt);
 		float f = uniform_real_distribution<float>(0, 1)(_mt);
 		Vector4 color = { 0,0,1,1 };
-		Particula* aux = new Particula(newPos, newSpeed, {0,0,0}, 10, 1000, false, color,f);
-
-		GravityForceGenerator* g = new GravityForceGenerator();
-		reg.RegisterParticle(aux, g);
+		TornadoForceGenerator* t = new TornadoForceGenerator(1000);
+		RigidSolid* aux = new RigidSolid(PxTransform(newPos), newSpeed, 100, gPhysics, gScene, color);
 		lista.push_back(aux);
-		forceList.push_back(g);
 
 	}
 	else if (modo == MIST)
@@ -115,8 +75,7 @@ void ParticleSystem::generate()
 		float f = uniform_real_distribution<float>(0, 1)(_mt);
 		Vector4 color = { 1,1,1,0.7 };
 		WindForceGenerator* w = new WindForceGenerator(Vector3(20, 0, 0), 1000);
-		
-		Particula* aux = new Particula(newPos, newSpeed, Vector3(0, 0, 0), 10, 1000,false, color,f);
+		RigidSolid* aux = new RigidSolid(PxTransform(newPos), newSpeed, 100, gPhysics, gScene, color);
 		reg.RegisterParticle(aux, w);
 		lista.push_back(aux);
 		forceList.push_back(w);
@@ -132,27 +91,27 @@ void ParticleSystem::generate()
 		newSpeed.z += normal_distribution<float>(0, 1)(_mt);
 		float f = uniform_real_distribution<float>(1, 2)(_mt);
 		Vector4 color = { 0,0,1,1 };
-		Particula* aux = new Particula(newPos, newSpeed, accel, 10, 100, false, color,f);
+		RigidSolid* aux = new RigidSolid(PxTransform(newPos), newSpeed, 100, gPhysics, gScene, color);
 		TornadoForceGenerator* t = new TornadoForceGenerator(100);
 		reg.RegisterParticle(aux, t);
 		forceList.push_back(t);
 		lista.push_back(aux);
 	}
 	else {
-		/*newPos = Vector3(0, 0, 0);
+		newPos = Vector3(0, 0, 0);
 		newPos.x += normal_distribution<float>(0, 2)(_mt);
 		newPos.y += normal_distribution<float>(0, 2)(_mt);
 		newPos.z += normal_distribution<float>(0, 2)(_mt);
 		float f = uniform_real_distribution<float>(1, 2)(_mt);
 		Vector4 color = { 0,0,1,1 };
-		Particula* aux = new Particula(newPos, Vector3(0, 0, 0), Vector3(0, 0, 0), 10, 100, f, color);
-		lista.push_back(aux);*/
+		RigidSolid* aux = new RigidSolid(PxTransform(newPos), Vector3(0, 0, 0),100, gPhysics,gScene,color);
+		lista.push_back(aux);
 	}
 }
 
-void ParticleSystem::setBlast()
+void SolidSystem::setBlast()
 {
-	for (auto a:lista)
+	for (auto a : lista)
 	{
 		ExplosionForceGenerator* e = new ExplosionForceGenerator(1000, Vector3(0, 0, 0), 100000, 10000);
 		reg.RegisterParticle(a, e);
@@ -160,7 +119,7 @@ void ParticleSystem::setBlast()
 	}
 }
 
-void ParticleSystem::AddK()
+void SolidSystem::AddK()
 {
 	for (auto a : springList)
 	{
@@ -168,21 +127,21 @@ void ParticleSystem::AddK()
 	}
 }
 
-void ParticleSystem::update(double t)
+void SolidSystem::update(double t)
 {
 	generate();
 	reg.update();
-	for (auto it =lista.begin(); it!=lista.end();)
+	for (auto it = lista.begin(); it != lista.end();)
 	{
-		(*it)->integrate(t, true);
-		if (!(*it)->Alive())
+		(*it)->integrate(t);
+		if (!(*it)->GetAlive())
 		{
-			reg.freeParticle(*it);
+			reg.freeSolid(*it);
 			delete (*it);
-			it= lista.erase(it);
+			it = lista.erase(it);
 		}
 		else
-		it++;
+			it++;
 	}
 	kill();
 }

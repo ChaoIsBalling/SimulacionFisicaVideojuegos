@@ -9,8 +9,10 @@
 #include "callbacks.hpp"
 #include"Projectile.h"
 #include "ParticleSystem.h"
+#include "SolidSystem.h"
 #include "RigidSolid.h"
 #include <iostream>
+#include"System.h"
 
 std::string display_text = "This is a test";
 
@@ -35,9 +37,10 @@ ContactReportCallback gContactReportCallback;
 
 RenderItem* sphereItem = nullptr;
 PxTransform* spheretransform = nullptr;
-ParticleSystem* sistema = nullptr;
+System* sistema = nullptr;
 vector <Projectile*> lista;
-Particula* p = nullptr;
+RigidSolid* solid = nullptr;
+//Particula* p = nullptr;
 // Initialize physics engine
 void initPhysics(bool interactive)
 {
@@ -74,15 +77,15 @@ void initPhysics(bool interactive)
 	Suelo->attachShape(*shape);
 	gScene->addActor(*Suelo);
 
-	PxRigidDynamic* aux;
-	
+	//solid = new RigidSolid(PxTransform({ 20,20,0 }),100, gPhysics,gScene);
 
-	//RenderItem* item;
-	//item = new RenderItem(shape, Suelo, { 0.8,0.8,0.8,1 });
+	RenderItem* item;
+	item = new RenderItem(shape, Suelo, { 0.8,0.8,0.8,1 });
 
-	p = new Particula(Vector3(0,0,0),Vector3(2,0,0),Vector3(0,0,0),100,100);
-	sistema = new ParticleSystem(Vector3(0,100,0),Vector3(0,-9.8,0),Vector3(0,10,0));
-   sistema->generateSpringDemo();
+	//p = new Particula(Vector3(0,0,0),Vector3(2,0,0),Vector3(0,0,0),100,100);
+	sistema = new SolidSystem(Vector3(0, 100, 0), Vector3(0, -9.8, 0), Vector3(0, 10, 0),gPhysics,gScene);
+	//sistema = new ParticleSystem(Vector3(0,100,0),Vector3(0,-9.8,0),Vector3(0,10,0));
+   //sistema->generateSpringDemo();
 	}
 
 
@@ -103,7 +106,7 @@ void stepPhysics(bool interactive, double t)
 			lista.erase(lista.begin() + i);
 		}
 	}
-	p->integrate(t, true);
+//	p->integrate(t, true);
 	sistema->update(t);
 }
 
@@ -134,7 +137,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	switch(toupper(key))
 	{
 	case 'Z':
-		std::cout << "s";
 		lista.push_back(new Projectile(Vector3(30, 35, 40), Vector3(0.0, 20.0, -5.0), Vector3(0, -9.8, 0)));
 		break;
 	case'E':

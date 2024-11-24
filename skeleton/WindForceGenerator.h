@@ -9,6 +9,7 @@ private:
 public:
 	WindForceGenerator(Vector3 v,double r,Vector3 p ={0,0,0}) :vel(v), radius(r),pos(p) {};
 	void update(Particula* p)override;
+	void update(RigidSolid* p)override;
 
 };
 

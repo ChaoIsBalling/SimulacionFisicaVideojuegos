@@ -12,5 +12,6 @@ private:
 public:
 	ExplosionForceGenerator(double r, Vector3 p,double k,float d) :radius(r),pos(p),K(k),duration(d){};
 	void update(Particula* p)override;
+	void update(RigidSolid* p)override;
 };
 

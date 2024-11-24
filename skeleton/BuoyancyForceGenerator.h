@@ -7,6 +7,7 @@ public:
 	BuoyancyForceGenerator(float h, float v, float d);
 
 	void update(Particula* p)override;
+	void update(RigidSolid* p)override;
 	
 	~BuoyancyForceGenerator();
 

@@ -9,3 +9,8 @@ void GravityForceGenerator::update(Particula* p)
 {
 	p->addForce(force);
 }
+
+void GravityForceGenerator::update(RigidSolid* p)
+{
+	p->addForce(force);
+}
