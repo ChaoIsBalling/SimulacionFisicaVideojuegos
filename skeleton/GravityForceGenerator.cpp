@@ -7,7 +7,7 @@ GravityForceGenerator::GravityForceGenerator()
 
 void GravityForceGenerator::update(Particula* p)
 {
-	p->addForce(force);
+	p->addForce(force * p->getMass());
 }
 
 void GravityForceGenerator::update(RigidSolid* p)

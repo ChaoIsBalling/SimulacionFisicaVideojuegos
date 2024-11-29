@@ -34,6 +34,7 @@ public:
 	void integrate(double t,bool semi);
 	void addForce(Vector3 f);
 	void clearForce();
+	float getMass() { return mass; }
 	Vector3 getVel() { return vel; }
 	Vector3 getPos() { return pose.p;}
 	bool Alive() { return alive;};

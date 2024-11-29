@@ -1,7 +1,8 @@
 #include "BuoyancyForceGenerator.h"
 
 BuoyancyForceGenerator::BuoyancyForceGenerator(float h, float v, float d):height(h),volume(v),liquidDensity(d)
-{liquidParticle= new Particula({ -10.0,20.0,0.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 100, 100, 2);
+{
+	liquidParticle = new Particula({ -10.0,20.0,0.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 100, 100, true, {0,0,1,1},10);
 }
 
 void BuoyancyForceGenerator::update(Particula* p)

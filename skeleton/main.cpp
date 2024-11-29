@@ -83,9 +83,9 @@ void initPhysics(bool interactive)
 	item = new RenderItem(shape, Suelo, { 0.8,0.8,0.8,1 });
 
 	//p = new Particula(Vector3(0,0,0),Vector3(2,0,0),Vector3(0,0,0),100,100);
-	sistema = new SolidSystem(Vector3(0, 100, 0), Vector3(0, -9.8, 0), Vector3(0, 10, 0),gPhysics,gScene);
-	//sistema = new ParticleSystem(Vector3(0,100,0),Vector3(0,-9.8,0),Vector3(0,10,0));
-   //sistema->generateSpringDemo();
+	//sistema = new SolidSystem(Vector3(0, 100, 0), Vector3(0, -9.8, 0), Vector3(0, 10, 0),gPhysics,gScene);
+	sistema = new ParticleSystem(Vector3(0,100,0),Vector3(0,-9.8,0),Vector3(0,10,0));
+   sistema->generateSpringDemo();
 	}
 
 
