@@ -11,6 +11,7 @@
 #include "ParticleSystem.h"
 #include "SolidSystem.h"
 #include "RigidSolid.h"
+#include"Player.h"
 #include <iostream>
 #include"System.h"
 
@@ -40,6 +41,7 @@ PxTransform* spheretransform = nullptr;
 System* sistema = nullptr;
 vector <Projectile*> lista;
 RigidSolid* solid = nullptr;
+Player* player = nullptr;
 //Particula* p = nullptr;
 // Initialize physics engine
 void initPhysics(bool interactive)
@@ -77,7 +79,7 @@ void initPhysics(bool interactive)
 	Suelo->attachShape(*shape);
 	gScene->addActor(*Suelo);
 
-	//solid = new RigidSolid(PxTransform({ 20,20,0 }),100, gPhysics,gScene);
+	player = new Player(PxTransform({ 20,20,0 }),Vector3(0,0,0), 100000, gPhysics, gScene, {1,0,0,1});
 
 	RenderItem* item;
 	item = new RenderItem(shape, Suelo, { 0.8,0.8,0.8,1 });
@@ -145,6 +147,12 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case'K':
 		sistema->AddK();
 			break;
+	case'J':
+		player->Move(-30);
+	break;
+	case 'L':
+		player->Move(30);
+	break;
 	//case 'B': break;
 	//case ' ':	break;
 	case '0':
