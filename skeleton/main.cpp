@@ -147,12 +147,18 @@ void keyPress(unsigned char key, const PxTransform& camera)
 	case'K':
 		sistema->AddK();
 			break;
-	case'J':
-		player->Move(-30);
+	case'F':
+		player->Move({-20,0,0});
 	break;
-	case 'L':
-		player->Move(30);
+	case 'H':
+		player->Move({ 20,0,0 });
 	break;
+	case'T':
+		player->Move({ 0,0,-20 });
+		break;
+	case'G':
+		player->Move({ 0,0,20 });
+		break;
 	//case 'B': break;
 	//case ' ':	break;
 	case '0':

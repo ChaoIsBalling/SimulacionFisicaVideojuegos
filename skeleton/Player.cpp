@@ -1,6 +1,11 @@
 #include "Player.h"
 
-void Player::Move(float i)
+void Player::Move(Vector3 dir)
 {
-	solid->setLinearVelocity({ i,0,0 });
+	solid->setLinearVelocity(dir);
+}
+
+void Player::Jump()
+{
+	solid->addForce({0,100*solid->getMass(),0});
 }
