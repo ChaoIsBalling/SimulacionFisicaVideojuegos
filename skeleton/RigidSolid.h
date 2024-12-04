@@ -21,12 +21,15 @@ protected:
 	PxScene* gScene = nullptr;
 
 public:
-	RigidSolid(PxTransform p, Vector3 speed, float l, PxPhysics* g, PxScene* gS, Vector4 Color) :pose(p), life(l), gPhysics(g), gScene(gS) {
+	RigidSolid(PxTransform p, Vector3 speed, float l, PxPhysics* g, PxScene* gS, Vector4 Color,float size=5, bool box=false) :pose(p), life(l), gPhysics(g), gScene(gS) {
 
 		solid = gPhysics->createRigidDynamic(pose);
 		solid->setLinearVelocity({ 0,5,0 });
 		solid->setAngularVelocity({ 0,0,0 });
-		shape = CreateShape(PxSphereGeometry(5));
+		if(!box)
+		shape = CreateShape(PxSphereGeometry(size));
+		else
+		shape = CreateShape(PxBoxGeometry(size,size,size));
 		solid->attachShape(*shape);
 		render = new RenderItem(shape, solid, Color);
 		PxRigidBodyExt::updateMassAndInertia(*solid, 0.15);

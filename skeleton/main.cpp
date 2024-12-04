@@ -83,10 +83,9 @@ void initPhysics(bool interactive)
 	player = new Player(PxTransform({ 20,20,0 }),Vector3(0,0,0), 100000, gPhysics, gScene, {0,1,0,1});
 
 	RenderItem* item;
-	item = new RenderItem(shape, Suelo, { 1.0,0.0,0.1,1 });
+	item = new RenderItem(shape, Suelo, { 0,0.0,0,1 });
 
 	//p = new Particula(Vector3(0,0,0),Vector3(2,0,0),Vector3(0,0,0),100,100);
-	//sistema = new SolidSystem(Vector3(0, 100, 0), Vector3(0, -9.8, 0), Vector3(0, 10, 0),gPhysics,gScene);
 	sistema = new ParticleSystem(Vector3(0,500,0),Vector3(0,-9.8,0),Vector3(0,10,0));
 	sistema->changeModes(0);
 	System* myst = new ParticleSystem(Vector3(0, 500, 0), Vector3(0, -9.8, 0), Vector3(0, 10, 0));
@@ -99,6 +98,14 @@ void initPhysics(bool interactive)
 	 bounce3->generateSpringDemo();
 	 System* bounce4 = new ParticleSystem(Vector3(50, 0, -250), Vector3(0, -9.8, 0), Vector3(0, 10, 0));
 	 bounce4->generateSpringDemo();
+	 System* stuff = new SolidSystem(Vector3(200, 00, 200), Vector3(0, -9.8, 0), Vector3(0, 10, 0), gPhysics, gScene);
+	 System* stuff2 = new SolidSystem(Vector3(-150, 00, 200), Vector3(0, -9.8, 0), Vector3(0, 10, 0), gPhysics, gScene);
+	 System* stuff3 = new SolidSystem(Vector3(200, 00, -200), Vector3(0, -9.8, 0), Vector3(0, 10, 0), gPhysics, gScene);
+	 System* stuff4 = new SolidSystem(Vector3(-150, 00, -200), Vector3(0, -9.8, 0), Vector3(0, 10, 0), gPhysics, gScene);
+	 sistemas.push_back(stuff3);
+	 sistemas.push_back(stuff4);
+	 sistemas.push_back(stuff2);
+	 sistemas.push_back(stuff);
 	 sistemas.push_back(sistema);
 	 sistemas.push_back(myst);
 	 sistemas.push_back(bounce);

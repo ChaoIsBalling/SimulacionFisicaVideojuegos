@@ -98,12 +98,15 @@ void SolidSystem::generate()
 		lista.push_back(aux);
 	}
 	else {
-		newPos = Vector3(0, 0, 0);
+		newPos = pos;
 		newPos.x += normal_distribution<float>(0, 2)(_mt);
 		newPos.y += normal_distribution<float>(0, 2)(_mt);
 		newPos.z += normal_distribution<float>(0, 2)(_mt);
 		float f = uniform_real_distribution<float>(1, 2)(_mt);
-		Vector4 color = { 0,0,1,1 };
+		float r = uniform_real_distribution<float>(0, 1)(_mt);
+		float g = uniform_real_distribution<float>(0, 1)(_mt);
+		float b = uniform_real_distribution<float>(0, 1)(_mt);
+		Vector4 color = { 1,g,0,1 };
 		RigidSolid* aux = new RigidSolid(PxTransform(newPos), Vector3(0, 0, 0),100, gPhysics,gScene,color);
 		lista.push_back(aux);
 	}

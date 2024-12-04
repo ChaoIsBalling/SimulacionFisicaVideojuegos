@@ -12,7 +12,7 @@
 #include"AnchoredSpringFG.h"
 #include"RubberBandForceGenerator.h"
 #include"BuoyancyForceGenerator.h"
-const int MAXSOLID = 100000;
+const int MAXSOLID = 20;
 class SolidSystem:public System
 {
 private:
