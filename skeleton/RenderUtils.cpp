@@ -1,5 +1,5 @@
 #include <vector>
-
+#include<iostream>
 #include "PxPhysicsAPI.h"
 
 #include "core.hpp"
@@ -50,6 +50,7 @@ namespace
 void motionCallback(int x, int y)
 {
 	sCamera->handleMotion(x, y);
+	std::cout << sCamera->getDir().x<<" " << sCamera->getDir().y << " " << sCamera->getDir().z << std::endl;
 }
 
 void keyboardCallback(unsigned char key, int x, int y)
@@ -137,7 +138,7 @@ void exitCallback(void)
 void renderLoop()
 {
 	StartCounter();
-	sCamera = new Camera(PxVec3(50.0f, 50.0f, 50.0f), PxVec3(-0.6f,-0.2f,-0.7f));
+	sCamera = new Camera(PxVec3(50.0f, 500.0f, 50.0f), PxVec3(-0.0f,-1.0f,-0.1f));
 
 	setupDefaultWindow("Simulacion Fisica Videojuegos");
 	setupDefaultRenderState();

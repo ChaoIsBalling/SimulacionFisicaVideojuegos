@@ -4,7 +4,7 @@
 class BuoyancyForceGenerator:public ForceGenerator
 {
 public:
-	BuoyancyForceGenerator(float h, float v, float d);
+	BuoyancyForceGenerator(float h, float v, float d,Vector3 pos);
 
 	void update(Particula* p)override;
 	void update(RigidSolid* p)override;

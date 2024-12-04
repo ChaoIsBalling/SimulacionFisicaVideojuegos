@@ -26,7 +26,7 @@ public:
 		solid = gPhysics->createRigidDynamic(pose);
 		solid->setLinearVelocity({ 0,5,0 });
 		solid->setAngularVelocity({ 0,0,0 });
-		shape = CreateShape(PxBoxGeometry(5, 5, 5));
+		shape = CreateShape(PxSphereGeometry(5));
 		solid->attachShape(*shape);
 		render = new RenderItem(shape, solid, Color);
 		PxRigidBodyExt::updateMassAndInertia(*solid, 0.15);

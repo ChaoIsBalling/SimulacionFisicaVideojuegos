@@ -25,7 +25,7 @@ class ParticleSystem: public System
 	Vector3 speed;
 public:
 	ParticleSystem(Vector3 P, Vector3 A, Vector3 S) :pos(P), accel(A), speed(S) {
-		modo = STATIC;
+		modo = ELSE;
 	};
 	ParticleForceRegistry reg = ParticleForceRegistry();
 

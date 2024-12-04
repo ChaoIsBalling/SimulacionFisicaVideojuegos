@@ -7,5 +7,5 @@ void Player::Move(Vector3 dir)
 
 void Player::Jump()
 {
-	solid->addForce({0,100*solid->getMass(),0});
+	solid->addForce({0,1000*solid->getMass(),0});
 }

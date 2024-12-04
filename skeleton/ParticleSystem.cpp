@@ -31,8 +31,10 @@ void ParticleSystem::generateSpringDemo()
 
  //BUOYANCY
 
-Particula* p4 = new Particula({ -10.0,50.0,0.0 }, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 100, 100, true, {0,1,0,1},1,900);
-	BuoyancyForceGenerator* f4= new BuoyancyForceGenerator(10,1 ,1000);
+Vector3 newpos = pos;
+newpos.y += 20;
+Particula* p4 = new Particula(newpos, { 0.0,0.0,0.0 }, { 0.0,0.0,0.0 }, 10000, 10000, false, {1,1,0,1},5,5);
+	BuoyancyForceGenerator* f4= new BuoyancyForceGenerator(10,1 ,1000,pos);
 	forceList.push_back(f4);
 	forceList.push_back(g);
 	lista.push_back(p4);
@@ -84,15 +86,14 @@ void ParticleSystem::generate()
 	newSpeed = speed;
 	if (modo == RAIN)
 	{
-		newPos.x += uniform_real_distribution<float>(0, 50)(_mt);
-		newPos.y = 50;
-		newPos.y += uniform_real_distribution<float>(0, 50)(_mt);
-		newPos.z += uniform_real_distribution<float>(0, 50)(_mt);
+		newPos.x += uniform_real_distribution<float>(-100, 200)(_mt);
+		newPos.y += uniform_real_distribution<float>(0, 10)(_mt);
+		newPos.z += uniform_real_distribution<float>(-100, 200)(_mt);
 		newSpeed.x += uniform_real_distribution<float>(0, 1)(_mt);
 		newSpeed.y -= uniform_real_distribution<float>(50, 100)(_mt);
 		newSpeed.z += uniform_real_distribution<float>(0, 1)(_mt);
 		float f = uniform_real_distribution<float>(0, 1)(_mt);
-		Vector4 color = { 0,0,1,1 };
+		Vector4 color = { 0,0.5,1,0.1 };
 		Particula* aux = new Particula(newPos, newSpeed, {0,0,0}, 10, 1000, false, color,f);
 
 		GravityForceGenerator* g = new GravityForceGenerator();
@@ -103,17 +104,17 @@ void ParticleSystem::generate()
 	}
 	else if (modo == MIST)
 	{
-		newPos.y = 20;
-		newPos.x += uniform_real_distribution<float>(0, 50)(_mt);
-		newPos.y += uniform_real_distribution<float>(0, 50)(_mt);
-		newPos.z += uniform_real_distribution<float>(0, 50)(_mt);
+		newPos.y = 450;
+		newPos.x += uniform_real_distribution<float>(0, 100)(_mt);
+		newPos.y += uniform_real_distribution<float>(0, 100)(_mt);
+		newPos.z += uniform_real_distribution<float>(0, 100)(_mt);
 		newSpeed.y = 0;
 		newSpeed.x += uniform_real_distribution<float>(0, 1)(_mt);
 		newSpeed.y += uniform_real_distribution<float>(0, 1)(_mt);
 		newSpeed.z += uniform_real_distribution<float>(0, 1)(_mt);
-		float f = uniform_real_distribution<float>(0, 1)(_mt);
+		float f = uniform_real_distribution<float>(0, 0.3)(_mt);
 		Vector4 color = { 1,1,1,0.7 };
-		WindForceGenerator* w = new WindForceGenerator(Vector3(20, 0, 0), 1000);
+		WindForceGenerator* w = new WindForceGenerator(Vector3(2, 0, 0), 1000);
 		
 		Particula* aux = new Particula(newPos, newSpeed, Vector3(0, 0, 0), 10, 1000,false, color,f);
 		reg.RegisterParticle(aux, w);
@@ -137,7 +138,7 @@ void ParticleSystem::generate()
 		forceList.push_back(t);
 		lista.push_back(aux);
 	}
-	else {
+	else if (modo==STATIC) {
 		newPos = Vector3(0, 0, 0);
 		newPos.x += normal_distribution<float>(0, 2)(_mt);
 		newPos.y += normal_distribution<float>(0, 2)(_mt);

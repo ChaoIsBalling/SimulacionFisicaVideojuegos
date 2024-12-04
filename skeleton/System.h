@@ -1,5 +1,5 @@
 #pragma once
-enum Mode { RAIN, MIST, WATERFALL, STATIC };
+enum Mode { RAIN, MIST, WATERFALL, STATIC,ELSE };
 
 class System
 {

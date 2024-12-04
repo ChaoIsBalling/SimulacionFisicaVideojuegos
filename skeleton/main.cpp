@@ -39,6 +39,7 @@ ContactReportCallback gContactReportCallback;
 RenderItem* sphereItem = nullptr;
 PxTransform* spheretransform = nullptr;
 System* sistema = nullptr;
+vector<System*> sistemas;
 vector <Projectile*> lista;
 RigidSolid* solid = nullptr;
 Player* player = nullptr;
@@ -75,19 +76,36 @@ void initPhysics(bool interactive)
 	sceneDesc.simulationEventCallback = &gContactReportCallback;
 	gScene = gPhysics->createScene(sceneDesc);
 	PxRigidStatic* Suelo = gPhysics->createRigidStatic(PxTransform({ 0,0,0 }));
-	PxShape* shape = CreateShape(PxBoxGeometry(100, 0.1, 100));
+	PxShape* shape = CreateShape(PxBoxGeometry(1000, 0.1, 1000));
 	Suelo->attachShape(*shape);
 	gScene->addActor(*Suelo);
 
-	player = new Player(PxTransform({ 20,20,0 }),Vector3(0,0,0), 100000, gPhysics, gScene, {1,0,0,1});
+	player = new Player(PxTransform({ 20,20,0 }),Vector3(0,0,0), 100000, gPhysics, gScene, {0,1,0,1});
 
 	RenderItem* item;
-	item = new RenderItem(shape, Suelo, { 0.8,0.8,0.8,1 });
+	item = new RenderItem(shape, Suelo, { 1.0,0.0,0.1,1 });
 
 	//p = new Particula(Vector3(0,0,0),Vector3(2,0,0),Vector3(0,0,0),100,100);
 	//sistema = new SolidSystem(Vector3(0, 100, 0), Vector3(0, -9.8, 0), Vector3(0, 10, 0),gPhysics,gScene);
-	sistema = new ParticleSystem(Vector3(0,100,0),Vector3(0,-9.8,0),Vector3(0,10,0));
-   sistema->generateSpringDemo();
+	sistema = new ParticleSystem(Vector3(0,500,0),Vector3(0,-9.8,0),Vector3(0,10,0));
+	sistema->changeModes(0);
+	System* myst = new ParticleSystem(Vector3(0, 500, 0), Vector3(0, -9.8, 0), Vector3(0, 10, 0));
+	myst->changeModes(1);
+   System*  bounce = new ParticleSystem(Vector3(-200, 0, 0), Vector3(0, -9.8, 0), Vector3(0, 10, 0));
+	 bounce->generateSpringDemo();
+	 System* bounce2 = new ParticleSystem(Vector3(300, 0, 0), Vector3(0, -9.8, 0), Vector3(0, 10, 0));
+	 bounce2->generateSpringDemo();
+	 System* bounce3 = new ParticleSystem(Vector3(50, 0, 220), Vector3(0, -9.8, 0), Vector3(0, 10, 0));
+	 bounce3->generateSpringDemo();
+	 System* bounce4 = new ParticleSystem(Vector3(50, 0, -250), Vector3(0, -9.8, 0), Vector3(0, 10, 0));
+	 bounce4->generateSpringDemo();
+	 sistemas.push_back(sistema);
+	 sistemas.push_back(myst);
+	 sistemas.push_back(bounce);
+	 sistemas.push_back(bounce2);
+	 sistemas.push_back(bounce3);
+	 sistemas.push_back(bounce4);
+   //sistema->generateSpringDemo();
 	}
 
 
@@ -109,7 +127,10 @@ void stepPhysics(bool interactive, double t)
 		}
 	}
 //	p->integrate(t, true);
-	sistema->update(t);
+	for (auto a : sistemas)
+	{
+		a->update(t);
+	}
 }
 
 // Function to clean data
@@ -148,16 +169,19 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		sistema->AddK();
 			break;
 	case'F':
-		player->Move({-20,0,0});
+		player->Move({-30,0,0});
 	break;
 	case 'H':
-		player->Move({ 20,0,0 });
+		player->Move({ 30,0,0 });
 	break;
 	case'T':
-		player->Move({ 0,0,-20 });
+		player->Move({ 0,0,-30 });
 		break;
 	case'G':
-		player->Move({ 0,0,20 });
+		player->Move({ 0,0,30 });
+		break;
+	case ' ':
+		player->Jump();
 		break;
 	//case 'B': break;
 	//case ' ':	break;
