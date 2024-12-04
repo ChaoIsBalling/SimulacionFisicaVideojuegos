@@ -93,8 +93,9 @@ void ParticleSystem::generate()
 		newSpeed.y -= uniform_real_distribution<float>(50, 100)(_mt);
 		newSpeed.z += uniform_real_distribution<float>(0, 1)(_mt);
 		float f = uniform_real_distribution<float>(0, 1)(_mt);
+		float mass = uniform_real_distribution<float>(1, 20)(_mt);
 		Vector4 color = { 0,0.5,1,0.1 };
-		Particula* aux = new Particula(newPos, newSpeed, {0,0,0}, 10, 1000, false, color,f);
+		Particula* aux = new Particula(newPos, newSpeed, {0,0,0}, 10, 1000, false, color,f,mass);
 
 		GravityForceGenerator* g = new GravityForceGenerator();
 		reg.RegisterParticle(aux, g);
