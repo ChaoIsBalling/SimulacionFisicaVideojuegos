@@ -21,7 +21,7 @@ protected:
 	PxScene* gScene = nullptr;
 
 public:
-	RigidSolid(PxTransform p, Vector3 speed, float l, PxPhysics* g, PxScene* gS, Vector4 Color,float size=5, bool box=false) :pose(p), life(l), gPhysics(g), gScene(gS) {
+	RigidSolid(PxTransform p, Vector3 speed, float l, PxPhysics* g, PxScene* gS, Vector4 Color,float size=5, bool box=false,float mass=1) :pose(p), life(l), gPhysics(g), gScene(gS) {
 
 		solid = gPhysics->createRigidDynamic(pose);
 		solid->setLinearVelocity({ 0,5,0 });
@@ -31,10 +31,23 @@ public:
 		else
 		shape = CreateShape(PxBoxGeometry(size,size,size));
 		solid->attachShape(*shape);
-		render = new RenderItem(shape, solid, Color);
-		PxRigidBodyExt::updateMassAndInertia(*solid, 0.15);
+		render = new RenderItem(shape, solid, Color);	
+		solid->setMass(mass);
+		if (box)
+		{
+			float i;
+			i = (1 / 12) * mass * (size * size + size * size);
+			solid->setMassSpaceInertiaTensor({i,i,i});
+		}
+		else
+		{
+			float i = (2 / 5) * mass * size * size;
+			solid->setMassSpaceInertiaTensor({i,i,i});
+		}
+		//PxRigidBodyExt::updateMassAndInertia(*solid, 0.15);
 		gScene->addActor(*solid);
 		solid->setLinearVelocity(speed);
+	
 
 		//render = new RenderItem(solid,shape, pose, { 1,0,0,1 });
 

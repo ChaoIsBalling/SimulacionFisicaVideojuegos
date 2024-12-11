@@ -107,6 +107,7 @@ void SolidSystem::generate()
 		float g = uniform_real_distribution<float>(0, 1)(_mt);
 		float b = uniform_real_distribution<float>(0, 1)(_mt);
 		Vector4 color = { 1,g,0,1 };
+		
 		RigidSolid* aux = new RigidSolid(PxTransform(newPos), Vector3(0, 0, 0),100, gPhysics,gScene,color);
 		lista.push_back(aux);
 	}
