@@ -11,7 +11,7 @@
 #include"AnchoredSpringFG.h"
 #include"RubberBandForceGenerator.h"
 #include"BuoyancyForceGenerator.h"
-const int MAXPARTICULAS = 100000;
+const int MAXPARTICULAS = 10000;
 
 class ParticleSystem: public System
 { private:

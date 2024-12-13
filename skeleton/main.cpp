@@ -94,14 +94,21 @@ void initPhysics(bool interactive)
 	 bounce->generateSpringDemo();
 	 System* bounce2 = new ParticleSystem(Vector3(300, 0, 0), Vector3(0, -9.8, 0), Vector3(0, 10, 0));
 	 bounce2->generateSpringDemo();
-	 System* bounce3 = new ParticleSystem(Vector3(50, 0, 220), Vector3(0, -9.8, 0), Vector3(0, 10, 0));
+	 System* bounce3 = new SolidSystem(Vector3(50, 0, 220), Vector3(0, -9.8, 0), Vector3(0, 10, 0), gPhysics, gScene);
+	 bounce3->changeModes(4);
 	 bounce3->generateSpringDemo();
-	 System* bounce4 = new ParticleSystem(Vector3(50, 0, -250), Vector3(0, -9.8, 0), Vector3(0, 10, 0));
+	 System* bounce4 = new SolidSystem(Vector3(50, 0, -250), Vector3(0, -9.8, 0), Vector3(0, 10, 0), gPhysics, gScene);
+	 bounce4->changeModes(4);
 	 bounce4->generateSpringDemo();
+
 	 System* stuff = new SolidSystem(Vector3(200, 00, 200), Vector3(0, -9.8, 0), Vector3(0, 10, 0), gPhysics, gScene);
+	 stuff->changeModes(3);
 	 System* stuff2 = new SolidSystem(Vector3(-150, 00, 200), Vector3(0, -9.8, 0), Vector3(0, 10, 0), gPhysics, gScene);
+	 stuff2->changeModes(3);
 	 System* stuff3 = new SolidSystem(Vector3(200, 00, -200), Vector3(0, -9.8, 0), Vector3(0, 10, 0), gPhysics, gScene);
+	 stuff3->changeModes(3);
 	 System* stuff4 = new SolidSystem(Vector3(-150, 00, -200), Vector3(0, -9.8, 0), Vector3(0, 10, 0), gPhysics, gScene);
+	 stuff4->changeModes(3);
 	 sistemas.push_back(stuff3);
 	 sistemas.push_back(stuff4);
 	 sistemas.push_back(stuff2);
@@ -186,9 +193,6 @@ void keyPress(unsigned char key, const PxTransform& camera)
 		break;
 	case'G':
 		player->Move({ 0,0,30 });
-		break;
-	case ' ':
-		player->Jump();
 		break;
 	//case 'B': break;
 	//case ' ':	break;

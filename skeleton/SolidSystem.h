@@ -28,7 +28,7 @@ private:
 	Vector3 speed;
 public:
 	SolidSystem(Vector3 P, Vector3 A, Vector3 S, PxPhysics* g, PxScene* gS) :pos(P), accel(A), speed(S),gPhysics(g),gScene(gS) {
-		modo = STATIC;
+		modo = ELSE;
 	};
 	SolidForceRegistry reg = SolidForceRegistry();
 	void generateSpringDemo()override;

@@ -2,6 +2,18 @@
 
 void SolidSystem::generateSpringDemo()
 {
+	GravityForceGenerator* g = new GravityForceGenerator();
+
+	Vector3 newpos = pos;
+	newpos.y += 20;
+	Vector4 color = { 1,0,0,1 };
+	RigidSolid* p4 = new RigidSolid(PxTransform(newpos),{0,0,0}, 100, gPhysics, gScene,color);
+	BuoyancyForceGenerator* f4 = new BuoyancyForceGenerator(10, 1, 1000, pos);
+	forceList.push_back(f4);
+	forceList.push_back(g);
+	lista.push_back(p4);
+	reg.RegisterParticle(p4, f4);
+	reg.RegisterParticle(p4, g);
 }
 
 void SolidSystem::changeModes(int i)
@@ -12,6 +24,10 @@ void SolidSystem::changeModes(int i)
 		modo = MIST;
 	else if (i == 2)
 		modo = WATERFALL;
+	else if (i == 3)
+		modo = STATIC;
+	else if (i == 4)
+		modo == ELSE;
 }
 
 void SolidSystem::clear()
@@ -97,7 +113,7 @@ void SolidSystem::generate()
 		forceList.push_back(t);
 		lista.push_back(aux);
 	}
-	else {
+	else if(modo==STATIC) {
 		newPos = pos;
 		newPos.x += normal_distribution<float>(0, 2)(_mt);
 		newPos.y += normal_distribution<float>(0, 2)(_mt);
@@ -110,6 +126,10 @@ void SolidSystem::generate()
 		
 		RigidSolid* aux = new RigidSolid(PxTransform(newPos), Vector3(0, 0, 0),100, gPhysics,gScene,color);
 		lista.push_back(aux);
+	}
+	else
+	{
+
 	}
 }
 
