@@ -1,5 +1,10 @@
 #include "SolidSystem.h"
 
+SolidSystem::~SolidSystem()
+{
+	clear();
+}
+
 void SolidSystem::generateSpringDemo()
 {
 	GravityForceGenerator* g = new GravityForceGenerator();

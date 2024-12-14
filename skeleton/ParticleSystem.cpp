@@ -1,5 +1,10 @@
 #include "ParticleSystem.h"
 
+ParticleSystem::~ParticleSystem()
+{
+	clear();
+}
+
 void ParticleSystem::generateSpringDemo()
 {GravityForceGenerator* g = new GravityForceGenerator();
 	//Particula* p1 = new Particula({-10.0,10.0,0.0},{0.0,0.0,0.0},{0.0,0.0,0.0},100,100,false);

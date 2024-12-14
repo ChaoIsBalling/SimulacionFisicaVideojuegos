@@ -27,6 +27,7 @@ public:
 	ParticleSystem(Vector3 P, Vector3 A, Vector3 S) :pos(P), accel(A), speed(S) {
 		modo = ELSE;
 	};
+	~ParticleSystem();
 	ParticleForceRegistry reg = ParticleForceRegistry();
 
 	void generateSpringDemo()override;

@@ -30,6 +30,7 @@ public:
 	SolidSystem(Vector3 P, Vector3 A, Vector3 S, PxPhysics* g, PxScene* gS) :pos(P), accel(A), speed(S),gPhysics(g),gScene(gS) {
 		modo = ELSE;
 	};
+	~SolidSystem();
 	SolidForceRegistry reg = SolidForceRegistry();
 	void generateSpringDemo()override;
 	void changeModes(int i)override;

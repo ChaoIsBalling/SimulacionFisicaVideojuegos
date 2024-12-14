@@ -162,6 +162,11 @@ void cleanupPhysics(bool interactive)
 	PxPvdTransport* transport = gPvd->getTransport();
 	gPvd->release();
 	transport->release();
+	for (auto a : sistemas)
+	{
+		delete a;
+		a = nullptr;
+	}
 	
 	gFoundation->release();
 	}
